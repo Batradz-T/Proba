@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.MetadataSource;
+import org.hibernate.metamodel.Metadata;
 import org.hibernate.metamodel.MetadataSources;
 
 import java.sql.*;
@@ -38,11 +39,20 @@ public class Util {
 //                configuration.addAnnotatedClass(User.class);
 //                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 //                sessionFactory = configuration.buildSessionFactory(builder.build());
+//
+//                Configuration configuration = new Configuration().configure();
+//                configuration.addAnnotatedClass(User.class);
+//                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+//                sessionFactory = configuration.buildSessionFactory(builder.build());
+
+
 
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(User.class);
+
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
+
             } catch (HibernateException e ) {
                 e.printStackTrace();
 

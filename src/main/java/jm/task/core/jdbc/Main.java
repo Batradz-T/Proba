@@ -20,10 +20,10 @@ public class Main {
             System.out.println(new User(name, lastName, age));
         }
 
-        List<User> users = userService.getAllUsers();
-        for (User user: users) {
-            System.out.println(user);
-        }
+//        List<User> users = userService.getAllUsers();
+//        for (User user: users) {
+//            System.out.println(user);
+//        }
 
         userService.cleanUsersTable();
         userService.getAllUsers();

@@ -13,11 +13,11 @@ import java.util.List;
 public class UserDaoHibernateImpl implements UserDao {
     String usersTable = "users";
     String sqlQuery;
-    private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory=Util.getSessionFactory();
     private  Session session;
 
     public UserDaoHibernateImpl() {
-        sessionFactory = Util.getSessionFactory();
+
     }
 
 
@@ -61,7 +61,9 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         sqlQuery = String.format("SELECT * FROM %s", usersTable);
-        return  sessionFactory.openSession().createSQLQuery(sqlQuery).list();
+        List<User> users =  sessionFactory.openSession().createSQLQuery(sqlQuery).list();
+        return users;
+
     }
 
     @Override
