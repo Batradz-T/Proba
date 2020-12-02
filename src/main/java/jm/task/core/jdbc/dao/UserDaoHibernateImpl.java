@@ -2,6 +2,7 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -61,8 +62,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         sqlQuery = String.format("SELECT * FROM %s", usersTable);
-        List<User> users =  sessionFactory.openSession().createSQLQuery(sqlQuery).list();
-        return users;
+        session = sessionFactory.openSession();
+        List<User> users = session.createSQLQuery(sqlQuery).addEntity(User.class).list();
+        session.close();
+        return  users;
+
 
     }
 
