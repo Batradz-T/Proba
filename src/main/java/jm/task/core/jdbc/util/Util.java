@@ -28,24 +28,6 @@ public class Util {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-//                Configuration cfg = new Configuration()
-//                        .addAnnotatedClass(User.class);
-//                sessionFactory = cfg.buildSessionFactory();
-                        //.addClass(org.hibernate.auction.Bid.class);
-//                StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-//                sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-
-//                Configuration configuration = new Configuration().configure();
-//                configuration.addAnnotatedClass(User.class);
-//                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-//                sessionFactory = configuration.buildSessionFactory(builder.build());
-//
-//                Configuration configuration = new Configuration().configure();
-//                configuration.addAnnotatedClass(User.class);
-//                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-//                sessionFactory = configuration.buildSessionFactory(builder.build());
-
-
 
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(User.class);
@@ -55,7 +37,6 @@ public class Util {
 
             } catch (HibernateException e ) {
                 e.printStackTrace();
-
 
             }
         }

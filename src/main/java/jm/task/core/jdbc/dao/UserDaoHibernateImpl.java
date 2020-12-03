@@ -79,4 +79,9 @@ public class UserDaoHibernateImpl implements UserDao {
         tx.commit();
         session.close();
     }
+
+    public void closeConnection() {
+        sessionFactory.close();
+
+    }
 }

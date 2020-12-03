@@ -1,11 +1,8 @@
 package jm.task.core.jdbc;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserServiceImpl;
-import jm.task.core.jdbc.util.Util;
-
-import java.lang.reflect.InvocationTargetException;
-import java.sql.*;
 import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -28,6 +25,8 @@ public class Main {
         userService.cleanUsersTable();
         userService.getAllUsers();
         userService.dropUsersTable();
+
+        userService.closeConnection();
 
     }
 }

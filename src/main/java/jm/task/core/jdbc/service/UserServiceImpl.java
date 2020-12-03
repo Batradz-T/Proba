@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     //private UserDaoJDBCImpl userService = new UserDaoJDBCImpl();
-      private UserDaoHibernateImpl userService = new UserDaoHibernateImpl();
+    private UserDaoHibernateImpl userService = new UserDaoHibernateImpl();
 
 
     public void createUsersTable() {
@@ -34,4 +34,6 @@ public class UserServiceImpl implements UserService {
     public void cleanUsersTable() {
         userService.cleanUsersTable();
     }
+
+    public void closeConnection() {userService.closeConnection();}
 }
