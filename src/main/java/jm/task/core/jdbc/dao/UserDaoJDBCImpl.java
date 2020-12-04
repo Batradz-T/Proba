@@ -19,6 +19,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             connection = Util.getGDBCConnection();
             statement = connection.createStatement();
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -30,6 +31,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try {
             statement.executeUpdate(sqlQuery);
+
         } catch (SQLException e) {
              e.printStackTrace();
         }
@@ -92,5 +94,15 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void closeConnection() {
+        try {
+            statement.close();
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }
