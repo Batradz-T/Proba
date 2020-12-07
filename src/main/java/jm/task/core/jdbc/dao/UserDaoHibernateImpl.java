@@ -2,22 +2,18 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.math.BigInteger;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
     String usersTable = "users";
-    String sqlQuery;
+    String hqlQuery;
     private SessionFactory sessionFactory;
     private Session session;
-
     public UserDaoHibernateImpl() {
         sessionFactory = Util.getSessionFactory();
     }
@@ -25,7 +21,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        sqlQuery = String.format("CREATE TABLE IF NOT EXISTS %s (id BIGINT AUTO_INCREMENT PRIMARY KEY, Name VARCHAR(20), LastName VARCHAR(20), Age int)",
+        String sqlQuery = String.format("CREATE TABLE IF NOT EXISTS %s (id BIGINT AUTO_INCREMENT PRIMARY KEY, Name VARCHAR(20), LastName VARCHAR(20), Age int)",
                 usersTable);
         session = sessionFactory.openSession();
         Transaction tr = session.beginTransaction();
@@ -36,7 +32,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        sqlQuery = String.format("DROP TABLE IF EXISTS %s", usersTable);
+        String sqlQuery = String.format("DROP TABLE IF EXISTS %s", usersTable);
         session = sessionFactory.openSession();
         Transaction tr = session.beginTransaction();
         session.createSQLQuery(sqlQuery).executeUpdate();
@@ -46,7 +42,6 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        //sqlQuery = String.format("INSERT INTO %s (Name, LastName, Age) VALUES (\'%s\', \'%s\', \'%d\')", usersTable, name, lastName, age);
         User user = new User(name, lastName, age);
         session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
@@ -57,36 +52,32 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-
-        sqlQuery = String.format("DELETE FROM %s WHERE id = %d", usersTable, id);
-        session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        session.createSQLQuery(sqlQuery).executeUpdate();
+        hqlQuery = "DELETE User u where u.id = :id";
+        session.createQuery(hqlQuery).setBigInteger("id", BigInteger.valueOf(id )).executeUpdate();
         tx.commit();
         session.close();
     }
 
-
     @Override
     public List<User> getAllUsers() {
-        sqlQuery = String.format("SELECT * FROM %s", usersTable);
+        hqlQuery = "FROM User";
         session = sessionFactory.openSession();
         Transaction tr = session.beginTransaction();
         session = sessionFactory.openSession();
-        List<User> users = session.createSQLQuery(sqlQuery).addEntity(User.class).list();
+        List<User> users = session.createQuery(hqlQuery).list();
         tr.commit();
         session.close();
         return users;
-
-
     }
 
     @Override
     public void cleanUsersTable() {
-        sqlQuery = String.format("truncate table %s", usersTable);
+        hqlQuery = "DELETE FROM User";
         session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        session.createSQLQuery(sqlQuery).executeUpdate();
+        session.createQuery(hqlQuery).executeUpdate();
         tx.commit();
         session.close();
     }
